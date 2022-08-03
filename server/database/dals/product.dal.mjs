@@ -6,6 +6,16 @@ const getAllProducts = () => {
     return queryAsync(query);
 }
 
+const getAllCategories = () => {
+    const query = 'SELECT * FROM categories';
+    return queryAsync(query);
+}
+
+const getOneProductById = (productId) => {
+    const query = 'SELECT * FROM products WHERE id = ? LIMIT 1';
+    return queryAsync(query, [productId]);
+}
+
 const getAllProductsByNameSearch = (searchName) => {
     const query = "SELECT * FROM products WHERE `name` LIKE ?";
     return queryAsync(query, [`%${searchName}%`]);
@@ -17,7 +27,7 @@ const getProductsByCategory = (categoryId) => {
 }
 
 const addNewProduct = ({name,category_id, price, image}) => {
-    const query = "INSERT INTO products (`name`, `category_id`, `price`, `image`) VALUES = (?,?,?,?)";
+    const query = "INSERT INTO products (`name`, `category_id`, `price`, `image`) VALUES (?,?,?,?)";
     return queryAsync(query, [name, category_id, price, image]);
 }
 
@@ -26,9 +36,19 @@ const updateProduct = ({id, name, category_id, price}) => {
     return queryAsync(query, [name, category_id, price, id]);
 }
 
+const foods = [
+    {
+        name: 'M&M',
+        category_id: 7,
+        price: 15,
+        image: './upload/1a6a4e10-a2dc-4c5d-9f24-b33b94aa9404.jpg'
+    }
+];
 
 export {
     getAllProducts,
+    getAllCategories,
+    getOneProductById,
     getAllProductsByNameSearch,
     getProductsByCategory,
     addNewProduct,

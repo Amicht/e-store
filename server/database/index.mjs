@@ -21,11 +21,14 @@ export {
     updateCartItem, 
     deleteCart, 
     deleteAllProductFromCart, 
-    deleteOneProductFromCart
+    deleteOneProductFromCart,
+    getCartItem,
 } from './dals/cart.dal.mjs'
 
 export {
     getAllProducts, 
+    getAllCategories,
+    getOneProductById,
     getAllProductsByNameSearch, 
     getProductsByCategory,
     addNewProduct, 

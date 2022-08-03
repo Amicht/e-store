@@ -2,7 +2,7 @@ import { queryAsync } from "../index.mjs";
 
 
 const getClient = ({id, password}) => {
-    const query = "SELECT * FROM clients WHERE id =? AND password = ?";
+    const query = "SELECT * FROM clients WHERE id = ? AND password = ?";
     return queryAsync(query, [id,password]);
 }
 
@@ -12,8 +12,8 @@ const addClient = (c) => {
 }
 
 const checkClientId = (clientId) => {
-    const query = "SELECT COUNT(*) FROM clients WHERE id = ? LIMIT 1";
-    return queryAsync(query, [id]);
+    const query = "SELECT COUNT(*) AS `isIdExist` FROM clients WHERE id = ? LIMIT 1";
+    return queryAsync(query, [clientId]);
 }
 
 export {
