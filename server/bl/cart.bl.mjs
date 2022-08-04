@@ -17,7 +17,7 @@ const getClientCartAsync = (clientId) => {
 
 const startNewCartAsync = (clientId) => {
     const date = new Date();
-    return addNewCart({clientId, date});
+    return addNewCart({clientId, date}).then(res => res.insertId);
 }
 
 const addItemToCartAsync = ({product_id, amount, cart_id}) => {

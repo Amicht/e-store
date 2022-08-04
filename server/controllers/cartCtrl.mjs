@@ -18,9 +18,9 @@ cartCtrl.post('/', async(req,res, next)=>{
     try{
         const clientId = req.body.id;
         if(!clientId) throw new ErrorModel(400, 'cart not sent');
-        const newCart = await startNewCartAsync(clientId)
+        const newCartId = await startNewCartAsync(clientId)
             .catch(() => {throw new ErrorModel(400,'unable to create new cart')});
-        res.status(201).send(newCart);
+        res.status(201).send(newCartId);
     }
     catch(err){ next(err) }
 });

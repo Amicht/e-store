@@ -11,7 +11,7 @@ const con = createConnection({
 export const queryAsync = promisify(con.query).bind(con);
 
 export { getClient, addClient, checkClientId } from './dals/clients.dal.mjs'
-export { addNewOrder, getTotalStoreOrders } from './dals/orders.dal.mjs'
+export { addNewOrder, getTotalStoreOrders, getOrderById } from './dals/orders.dal.mjs'
 
 export {
     getActiveCart, 

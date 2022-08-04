@@ -1,4 +1,4 @@
-import { addOrderAsync, getStoreOrdersCountAsync } from '../bl/orders.bl.mjs'
+import { addOrderAsync, getStoreOrdersCountAsync, getOrderAsync } from '../bl/orders.bl.mjs'
 import {Router} from 'express';
 import ErrorModel from '../models/error.model.mjs';
 
@@ -17,8 +17,8 @@ ordersCtrl.get('/', async (req,res,next) => {
 
 ordersCtrl.post('/', async (req,res,next) => {
     try{
-        const newOrder = req.body;
-        await addOrderAsync(newOrder)
+        const newOrder = await addOrderAsync(req.body)
+        .then(res => getOrderAsync(res.insertId))
         .catch(err => { throw new ErrorModel(400, err.message) });
         res.status(201).send(newOrder);
     }

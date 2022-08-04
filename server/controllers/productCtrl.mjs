@@ -10,8 +10,8 @@ const productCtrl = Router();
 
 productCtrl.get('/', async(req,res, next) => {
     try{
-        const products = await getAllProductsAsync().catch(() => null);
-        if(!products) throw new ErrorModel(500, 'server errror');
+        const products = await getAllProductsAsync()
+        .catch(() => { throw new ErrorModel(500, 'server errror') });
         res.send(products);
     }
     catch(err){ next(err)}
@@ -28,7 +28,7 @@ productCtrl.get('/search/:searchword', async(req,res, next) => {
     catch(err){ next(err)}
 });
 
-productCtrl.get('/categories/', async(req,res, next) => {
+productCtrl.get('/categories', async(req,res, next) => {
     try{
         const products = await getFoodCategoriesAsync().catch(() => null);
         if(!products) throw new ErrorModel(500, 'server errror');
@@ -41,8 +41,7 @@ productCtrl.get('/category/:categoryId', async(req,res, next) => {
     try{
         const categoryId = req.params.categoryId;
         if(!categoryId) throw new ErrorModel(400, 'no category sent');
-        const products = await getProductsByCategoryAsync(categoryId).catch(() => null);
-        if(!products || products.length === 0) throw new ErrorModel(404, 'no items found');
+        const products = await getProductsByCategoryAsync(categoryId).catch(() => {throw new Error});
         res.send(products);
     }
     catch(err){ next(err)}

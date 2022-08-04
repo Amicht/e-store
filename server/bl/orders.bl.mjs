@@ -1,12 +1,17 @@
-import { addNewOrder, getTotalStoreOrders } from '../database/index.mjs';
+import { addNewOrder, getOrderById, getTotalStoreOrders } from '../database/index.mjs';
 
 
 const getStoreOrdersCountAsync = () => getTotalStoreOrders();
 
-const addOrderAsync = (newOrder) => addNewOrder(newOrder);
+const addOrderAsync = (newOrder) => {
+    newOrder.date = new Date();
+    return addNewOrder(newOrder);
+}
 
+const getOrderAsync = (orderId) => getOrderById(orderId);
 
 export {
+    getOrderAsync,
     addOrderAsync,
     getStoreOrdersCountAsync
 }

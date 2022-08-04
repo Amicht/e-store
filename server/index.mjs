@@ -9,7 +9,7 @@ config();
 const PORT = process.env.PORT;
 const server = express();
 
-server.use(cors({ origin:'http://localhost:4200/' }));
+server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({extended:true}));
 server.use(fileUpload({limits: { fileSize: 50 * 1024 * 1024 }}));

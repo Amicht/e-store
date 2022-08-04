@@ -7,7 +7,7 @@ const getActiveCart = (clientID) => {
 };
 
 const getCartItems = (cartId) => {
-    const query = "SELECT * FROM `cart items` WHERE `cart_id` = ?";
+    const query = "SELECT a.* , b.name AS `name` FROM `cart_items` a JOIN `products` b ON a.product_id = b.id WHERE a.cart_id = ?";
     return queryAsync(query, [cartId]);
 };
 
