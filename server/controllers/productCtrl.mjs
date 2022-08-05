@@ -3,12 +3,13 @@ import { addProductAsync, getAllProductsAsync, getFoodCategoriesAsync, getProdct
 import { Router } from 'express';
 import ErrorModel from '../models/error.model.mjs';
 import { addFileHelper } from '../helpers/fileUploadHelper.mjs';
+import { authAdmin, authUser } from '../middleware/auth-middleware.mjs';
 
 
 const productCtrl = Router();
 
 
-productCtrl.get('/', async(req,res, next) => {
+productCtrl.get('/',authUser, async(req,res, next) => {
     try{
         const products = await getAllProductsAsync()
         .catch(() => { throw new ErrorModel(500, 'server errror') });
@@ -17,7 +18,7 @@ productCtrl.get('/', async(req,res, next) => {
     catch(err){ next(err)}
 });
 
-productCtrl.get('/search/:searchword', async(req,res, next) => {
+productCtrl.get('/search/:searchword',authUser, async(req,res, next) => {
     try{
         const searchword = req.params.searchword;
         if(!searchword) throw new ErrorModel(400, 'no word sent');
@@ -28,7 +29,7 @@ productCtrl.get('/search/:searchword', async(req,res, next) => {
     catch(err){ next(err)}
 });
 
-productCtrl.get('/categories', async(req,res, next) => {
+productCtrl.get('/categories',authUser, async(req,res, next) => {
     try{
         const products = await getFoodCategoriesAsync().catch(() => null);
         if(!products) throw new ErrorModel(500, 'server errror');
@@ -37,7 +38,7 @@ productCtrl.get('/categories', async(req,res, next) => {
     catch(err){ next(err)}
 });
 
-productCtrl.get('/category/:categoryId', async(req,res, next) => {
+productCtrl.get('/category/:categoryId',authUser, async(req,res, next) => {
     try{
         const categoryId = req.params.categoryId;
         if(!categoryId) throw new ErrorModel(400, 'no category sent');
@@ -47,7 +48,7 @@ productCtrl.get('/category/:categoryId', async(req,res, next) => {
     catch(err){ next(err)}
 });
 
-productCtrl.post('/', async(req,res, next) => {
+productCtrl.post('/',authAdmin, async(req,res, next) => {
     try{
         const productToAdd = req.body;
         const imageFile = req.files.image;
@@ -56,19 +57,19 @@ productCtrl.post('/', async(req,res, next) => {
         await addProductAsync({...productToAdd, image}).catch((err) => {
             throw new ErrorModel(500, 'server errror')
         });
-        res.status(201).send(productToAdd);
+        res.status(201).send();
     }
     catch(err){ next(err) }
 });
 
-productCtrl.put('/', async(req,res, next) => {
+productCtrl.put('/',authAdmin, async(req,res, next) => {
     try{
         const productToUpdate = req.body;
         if(!productToUpdate) throw new ErrorModel(400, 'no product to update');
         await updateProductAsync(productToUpdate).catch(() => {
             throw new ErrorModel(500, 'server errror');
         });
-        res.status(200).send(productToUpdate);
+        res.status(200).send();
     }
     catch(err){ next(err) }
 });

@@ -2,19 +2,20 @@ import { getClientCartAsync, startNewCartAsync, addItemToCartAsync,
     removeItemFromCartAsync, deleteCartAsync } from '../bl/cart.bl.mjs'
 import {Router} from 'express';
 import ErrorModel from '../models/error.model.mjs';
+import { authUser } from '../middleware/auth-middleware.mjs';
 
 const cartCtrl = Router();
 
-cartCtrl.get('/:clientId', async(req,res, next)=>{
+cartCtrl.get('/', authUser,async(req,res, next)=>{
     try{
-        const clientId = +req.params.clientId;
+        const clientId = +req.body.user.id;
         const cart = await getClientCartAsync(clientId);
         res.send(cart);
     }
     catch(err){ next(err) }
 });
 
-cartCtrl.post('/', async(req,res, next)=>{
+cartCtrl.post('/',authUser, async(req,res, next)=>{
     try{
         const clientId = req.body.id;
         if(!clientId) throw new ErrorModel(400, 'cart not sent');
@@ -25,7 +26,7 @@ cartCtrl.post('/', async(req,res, next)=>{
     catch(err){ next(err) }
 });
 
-cartCtrl.post('/item', async(req,res, next)=>{
+cartCtrl.post('/item',authUser, async(req,res, next)=>{
     try{
         const itemToAdd = req.body;
         console.log(itemToAdd);
@@ -37,7 +38,7 @@ cartCtrl.post('/item', async(req,res, next)=>{
     catch(err){ next(err) }
 });
 
-cartCtrl.delete('/item/:itemId', async(req,res, next)=>{
+cartCtrl.delete('/item/:itemId',authUser, async(req,res, next)=>{
     try{
         const itemId = +req.params.itemId;
         await removeItemFromCartAsync(itemId);
@@ -46,7 +47,7 @@ cartCtrl.delete('/item/:itemId', async(req,res, next)=>{
     catch(err){ next(err) }
 });
 
-cartCtrl.delete('/:cartId', async(req,res, next)=>{
+cartCtrl.delete('/:cartId',authUser, async(req,res, next)=>{
     try{
         const cartId = +req.params.cartId;
         await deleteCartAsync(cartId);

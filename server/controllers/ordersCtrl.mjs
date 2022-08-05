@@ -1,10 +1,11 @@
 import { addOrderAsync, getStoreOrdersCountAsync, getOrderAsync } from '../bl/orders.bl.mjs'
 import {Router} from 'express';
 import ErrorModel from '../models/error.model.mjs';
+import { authUser } from '../middleware/auth-middleware.mjs';
 
 const ordersCtrl = Router();
 
-ordersCtrl.get('/', async (req,res,next) => {
+ordersCtrl.get('/', authUser, async (req,res,next) => {
     try{
         await getStoreOrdersCountAsync()
         .then(orderCount => {
@@ -15,7 +16,7 @@ ordersCtrl.get('/', async (req,res,next) => {
     catch(err){ next(err) }
 });
 
-ordersCtrl.post('/', async (req,res,next) => {
+ordersCtrl.post('/', authUser, async (req,res,next) => {
     try{
         const newOrder = await addOrderAsync(req.body)
         .then(res => getOrderAsync(res.insertId))
