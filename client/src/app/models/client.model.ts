@@ -1,9 +1,10 @@
 interface Client {
   id: number;
-  firstName: string;
-  lastName: string;
   email: string;
   password: string;
+  
+  firstName: string;
+  lastName: string;
   city: string;
   street: string;
 }

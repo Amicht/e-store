@@ -14,31 +14,31 @@ export class CartService {
   private currentcClientId = -1;
   constructor(private httpClient:HttpClient) { }
 
-  loadCart(clientId:number){
-    lastValueFrom(this.httpClient.get<Cart>(this.cartURL + clientId))
+  loadCart(){
+    lastValueFrom(this.httpClient.get<Cart>(this.cartURL))
     .then(cart => this.$cartSubject.next(cart))
     .catch(err => console.log(err.message));
   }
   startCart(clientId:number){
     lastValueFrom(this.httpClient.post(this.cartURL, {id:clientId}))
-    .then(() => this.loadCart(clientId))
+    .then(() => this.loadCart())
     .then(()=> this.currentcClientId = clientId)
     .catch(err => console.log(err.message));
   }
   addProductToCart(productToAdd:CartItemReq){
     lastValueFrom(this.httpClient.post(this.cartURL+ 'item', productToAdd))
-    .then(()=> this.loadCart(this.currentcClientId))
+    .then(()=> this.loadCart())
     .catch(err => console.log(err.message));
   }
   removeProductFromCart(productId:number){
     lastValueFrom(this.httpClient.delete(this.cartURL+ 'item/' + productId))
-    .then(()=> this.loadCart(this.currentcClientId))
+    .then(()=> this.loadCart())
     .catch(err => console.log(err.message));
   }
   deleteCart(cartId:number){
     lastValueFrom(this.httpClient.delete(this.cartURL+ cartId))
-    .then(()=> this.loadCart(this.currentcClientId))
+    .then(()=> this.loadCart())
     .catch(err => console.log(err.message));
   }
-  
+
 }

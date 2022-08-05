@@ -21,7 +21,6 @@ export class ProductService {
   async loadProducts(){
     const productRes = await lastValueFrom(this.httpClient.get<ProductRes[]>(this.productURL));
     this.$productsubject.next(this.addIntireImageURL(productRes));
-    console.log(this.products$);
   }
   async loadProductsByCategoryId(categoryId:number){
     const productRes = await lastValueFrom(this.httpClient.get<ProductRes[]>(this.productURL+ '/category/'+ categoryId));
@@ -29,9 +28,11 @@ export class ProductService {
     console.log(productRes);
   }
   async loadProductsBySearchword(searchword:string){
-    const productRes = await lastValueFrom(this.httpClient.get<ProductRes[]>(this.productURL+ '/search/'+ searchword));
-    this.$productsubject.next(this.addIntireImageURL(productRes));
-    console.log(productRes);
+    lastValueFrom(this.httpClient.get<ProductRes[]>(this.productURL+ '/search/'+ searchword))
+    .then(productRes => {
+      this.$productsubject.next(this.addIntireImageURL(productRes));
+      console.log(productRes);
+    });
   }
   async addProduct(product:FormData){
     const productRes = await lastValueFrom(this.httpClient.post(this.productURL, product))
