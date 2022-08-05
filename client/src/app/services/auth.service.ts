@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
 import { ClientRegister, ClientResponse } from '../models/client.model';
 
 @Injectable({
@@ -14,27 +14,20 @@ export class AuthService {
   constructor(private httpClient:HttpClient) { }
 
   async checkAvailableIdOnregistration(newId:number){
-    const isAvailable = await lastValueFrom(this.httpClient.get(this.serverURL + 'register/' + newId))
-    return isAvailable;
+    return lastValueFrom(this.httpClient.get(this.serverURL + 'register/' + newId))
   }
+
   async register(client:ClientRegister){
-    await lastValueFrom(this.httpClient.post(this.serverURL + 'register',client))
-    .then(() => console.log("Registration successfully added"))
-    .catch(err => console.log(err.message));
+    return lastValueFrom(this.httpClient.post(this.serverURL + 'register',client))
+    .then(() => console.log("Client successfully added"))
   }
   async login(password:string, id:number){
-    await lastValueFrom(this.httpClient.post<string>(this.serverURL + 'login',{password,id}))
+    return firstValueFrom(this.httpClient.post(this.serverURL + 'login',{password,id},{responseType:'text'}))
     .then((token) => this.setClientTokenToLocalStorage(token))
-    .catch(err => console.log(err.message));
   }
 
   setClientTokenToLocalStorage(token:string){
-    window.localStorage.setItem("JWT", JSON.stringify(token));
+    window.localStorage.setItem("JWT", token);
   }
-
-  getClientTokenFromLocalStorage(){
-    const token = window.localStorage.getItem("JWT") || null;
-    if(token) return JSON.parse(token);
-    return null;
-  }
+  
 }
