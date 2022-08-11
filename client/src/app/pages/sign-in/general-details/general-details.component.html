@@ -1,0 +1,23 @@
+
+<div class="card px-3 border-0" >
+  <img src="./assets/uploads/main-store.jpg"  class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title text-center">Store details</h5>
+    <p class="card-text">
+      <span>{{productsCount}} available products in our store</span><br/>
+      <span>{{orderCount}} orders submitted in our store</span>
+    </p>
+  </div>
+
+  <section *ngIf="clientDetails" class="text-warning">
+    Notification: <br/>
+    Hello {{clientDetails.firstName}},
+    <div *ngIf="cart && cart.items.length > 0">
+        you have open cart from {{cart.date | date}}<br/>
+        <button routerLink="/store" class="btn btn-primary mt-2">continue shopping</button>
+    </div>
+    <div *ngIf="!cart || cart.items.length === 0 ">
+      <button routerLink="/store" class="btn btn-primary my-3">start shopping</button>
+    </div>
+  </section>
+</div>

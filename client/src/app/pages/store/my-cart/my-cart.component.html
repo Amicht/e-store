@@ -1,0 +1,30 @@
+<div class="mt-2">
+  <h2>My Cart</h2>
+  <div *ngIf="cart" >
+
+    <div *ngIf="cart.items.length === 0" class="mt-5 text-center">Your cart is empty...</div>
+
+    <div class="card" *ngIf="cart.items.length > 0">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let item of cart.items">
+
+          <button type="button"
+            class="btn-close"
+            aria-label="Close" (click)="removeItemFromCart(item.id)">
+          </button>
+
+          <span class="mx-3">
+            {{item.amount}}
+            {{item.name}} -
+            <span class="fw-bold text-success">
+              {{item.totalPrice | currency: "ILS"}}
+            </span>
+          </span>
+
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+

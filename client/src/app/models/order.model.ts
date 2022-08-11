@@ -4,7 +4,7 @@ export interface OrderModelRequest{
   totalPrice: number;
   city: string;
   street: string;
-  arrival: Date;
+  arrival: string;
   creditNumber: number;
 }
 export interface OrderModelResponce extends OrderModelRequest{

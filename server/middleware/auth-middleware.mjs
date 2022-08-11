@@ -19,7 +19,11 @@ const authUser = async(req,res,next) => {
         const isregistered = await verifyToken(req.headers.authorization, 1);
         if(!isregistered) return res.status(401).send("unauthorized");
         const user = await getUserFromToken(req.headers.authorization);
-        req.body.user = user;
+        req.body.user = {
+            id:user.id, 
+            role: user.role, 
+            firstName: user.firstName,
+            lastName: user.lastName};
         next();
     }
     catch(err){

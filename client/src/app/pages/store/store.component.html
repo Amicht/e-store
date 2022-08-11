@@ -1,0 +1,19 @@
+<div class="row store-page">
+
+  <div class="col-4">
+    <app-my-cart [cart]="cart" (remove)="removeItemFromCart($event)"></app-my-cart>
+    <div class="mx-auto text-center mt-3">
+      <button class="btn btn-outline-success" routerLink="/order">
+        {{totalPrice | currency: "ILS"}} payment
+      </button>
+    </div>
+  </div>
+
+  <app-products class="col-8"
+    [userRole]="1"
+    [categories]="categories"
+    [products]="products"
+    (categoryChange)="setCategory($event)">
+  </app-products>
+
+</div>

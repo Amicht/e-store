@@ -1,0 +1,20 @@
+<div class="px-3 border-1 text-center" >
+  <h2 class="my-4">Sign in</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div class="mb-3">
+      <label for="id" class="form-label">ID</label>
+      <input type="number" class="form-control" formControlName="id"
+      [ngClass]="{'invalid': loginForm.controls['id'].invalid}">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" formControlName="password"
+      [ngClass]="{'invalid': loginForm.controls['password'].invalid}">
+    </div>
+    <button type="submit" class="btn btn-primary"
+      [disabled]="loginForm.invalid">Go</button>
+  </form>
+  <div class="mt-5">
+    <a routerLink="/register">Dont have account yet? register now!</a>
+  </div>
+</div>

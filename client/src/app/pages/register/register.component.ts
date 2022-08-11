@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: []
 })
 export class RegisterComponent implements OnInit {
 
@@ -20,6 +20,12 @@ export class RegisterComponent implements OnInit {
     lastName:"",
     street:""
   }
+  firstFormRequires = [
+    "All filelds are required",
+    "ID must be at least 8 characters long",
+    "Email must have valid syntax",
+    "Password must be at least 4 characters long"
+  ]
   firstRegisterForm!: FormGroup;
   secondRegisterForm!: FormGroup;
   formNumber = 1;
@@ -31,23 +37,23 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.firstRegisterForm = this.formBuilder.group({
-      id: [null, [Validators.required]],
-      email: ["", [Validators.required]],
-      password: ["", [Validators.minLength(4) , Validators.required]],
-      confirm: ["", [Validators.minLength(4) , Validators.required]],
+      id: [null, [Validators.min(10000000), Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.minLength(4) , Validators.required, Validators.minLength(4)]],
+      confirm: ["", [Validators.minLength(4) , Validators.required, Validators.minLength(4)]],
     });
     this.secondRegisterForm = this.formBuilder.group({
-      firstName: [null, [Validators.minLength(2) ,Validators.required]],
-      lastName: ["", [Validators.minLength(2) ,Validators.required]],
-      city: ["", [Validators.minLength(2) , Validators.required]],
-      street: ["", [Validators.minLength(2) , Validators.required]],
+      firstName: [null ,[Validators.required]],
+      lastName: ["" ,[Validators.required]],
+      city: ["", [ Validators.required]],
+      street: ["", [ Validators.required]],
     });
   }
 
   async submitFirstForm(){
     if(this.firstRegisterForm.valid){
       if(this.firstRegisterForm.value["confirm"] !== this.firstRegisterForm.value["password"]){
-        this.errorMessage = "Password doen not match confirmation";
+        this.errorMessage = "Password does not match confirmation";
         return;
       }
       const isAvailable = await this.authService.checkAvailableIdOnregistration(this.firstRegisterForm.value["id"]);
@@ -68,7 +74,7 @@ export class RegisterComponent implements OnInit {
       this.registrationToEdit = {...this.registrationToEdit, ...this.secondRegisterForm.value}
       console.log(this.registrationToEdit);
       await this.authService.register(this.registrationToEdit)
-        .then(() => this._router.navigate(["/login"]))
+        .then(() => this._router.navigate(["/"]))
     }
 
   }

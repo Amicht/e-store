@@ -1,50 +1,70 @@
-<div>
+<div class=" mx-auto col-sm-10 mt-4">
 
-  <div *ngIf="!!errorMessage">{{errorMessage}}</div>
-  
-  <form *ngIf="formNumber === 1" [formGroup]="firstRegisterForm" (submit)="submitFirstForm()" >
-    <div class="mb-3">
-      <label class="form-label">ID</label>
-      <input type="number" class="form-control"  formControlName="id">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  <h3 class="my-3 text-center">Sign up</h3>
+  <section class="row" *ngIf="formNumber === 1">
+    <div class="col-6 text-center">
+      <form  [formGroup]="firstRegisterForm" (ngSubmit)="submitFirstForm()" >
+        <div class="mb-3">
+          <label class="form-label">ID</label>
+          <input type="number" class="form-control"   formControlName="id"
+          [ngClass]="{'invalid': firstRegisterForm.controls['id'].invalid}">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email address</label>
+          <input type="email" class="form-control"
+          formControlName="email"
+          [ngClass]="{'invalid': firstRegisterForm.controls['email'].invalid}">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password"
+          [ngClass]="{'invalid': firstRegisterForm.controls['password'].invalid}">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" formControlName="confirm"
+          [ngClass]="{'invalid': firstRegisterForm.controls['confirm'].invalid}">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="firstRegisterForm.invalid">continue</button>
+      </form>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Email address</label>
-      <input type="email" class="form-control"  formControlName="email">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    <div class="col-6 mt-5">
+      <ul>
+        <li *ngFor="let r of firstFormRequires">{{r}}</li>
+      </ul>
+      <div class="text-danger mt-3" *ngIf="!!errorMessage">{{errorMessage}}</div>
     </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" formControlName="password" >
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Confirm Password</label>
-      <input type="password" class="form-control" formControlName="confirm" >
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
+  </section>
 
+<section class="row" *ngIf="formNumber === 2">
 
-  <form *ngIf="formNumber === 2" [formGroup]="secondRegisterForm" (submit)="submitSecondForm()" >
-    <div class="mb-3">
-      <label class="form-label">First name</label>
-      <input type="text" class="form-control"  formControlName="firstName">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Last name</label>
-      <input type="text" class="form-control"  formControlName="lastName">
-    </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">City</label>
-      <input type="text" class="form-control" formControlName="city" >
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Street name</label>
-      <input type="text" class="form-control" formControlName="street" >
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-
-
+  <div class="col-6 text-center">
+    <form *ngIf="formNumber === 2" [formGroup]="secondRegisterForm" (ngSubmit)="submitSecondForm()" >
+      <div class="mb-3">
+        <label class="form-label">First name</label>
+        <input type="text" class="form-control"  formControlName="firstName">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Last name</label>
+        <input type="text" class="form-control"  formControlName="lastName">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">City</label>
+        <input type="text" class="form-control" formControlName="city" >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Street name</label>
+        <input type="text" class="form-control" formControlName="street" >
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="secondRegisterForm.invalid">Sign up</button>
+    </form>
+  </div>
+  <div class="col-6 mt-5">
+    <ul>
+      <li>All fields are required</li>
+    </ul>
+  </div>
+</section>
 
 </div>

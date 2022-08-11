@@ -1,0 +1,24 @@
+
+
+<div class="row">
+
+  <div class="col-4">
+    <app-add-product
+    *ngIf="adminScreen === 'add'">
+    </app-add-product>
+    <app-update-product
+    *ngIf="adminScreen === 'update'"
+    [product]="productToEdit">
+    </app-update-product>
+  </div>
+
+  <app-products
+    [categories]="categories"
+    (onEdidHandler)="changeAdminScreen($event)"
+    [userRole]="2"
+    [products]="products"
+    (categoryChange)="setCategory($event)"
+    class="col-8">
+  </app-products>
+
+</div>

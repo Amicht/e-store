@@ -1,6 +1,20 @@
 
-<div>
-  <img style="width: 50px;" src={{product.image}}/>
-  <div>{{product.name}}</div>
-  <div>{{product.price | currency}}</div>
+<div class="card border-0">
+  <img src={{product.image}} class="card-img-top" alt={{product.image}}>
+  <div class="card-body">
+    <h5 class="card-title">{{product.name}}</h5>
+    <p class="card-text">Price: {{product.price | currency: "ILS"}}</p>
+
+
+    <app-add-to-cart
+      *ngIf="userRole === 1"
+      [product_id]="product.id"
+      [productName]="product.name">
+    </app-add-to-cart>
+
+    <button class="btn btn-outline-primary"
+      *ngIf="userRole === 2"
+      (click)="editBtnHandler(product)">Edit
+    </button>
+  </div>
 </div>

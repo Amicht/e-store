@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductRes } from 'src/app/models/product.model';
 
 @Component({
@@ -8,9 +8,14 @@ import { ProductRes } from 'src/app/models/product.model';
 })
 export class ItemComponent implements OnInit {
 
+  @Input() userRole!: number;
+  @Output() onEditClickHandler = new EventEmitter()
   constructor() { }
   @Input() product!:ProductRes;
   ngOnInit(): void {
+  }
+  editBtnHandler(product:ProductRes){
+    this.onEditClickHandler.emit(product)
   }
 
 }

@@ -1,0 +1,10 @@
+
+<section class="row">
+
+  <app-cart class="col-6" [cart]="cart" [totalPrice]="totalPrice">
+  </app-cart>
+
+  <app-shipping-form class="col-6" (sendShipping)="sendOrder($event)">
+  </app-shipping-form>
+
+</section>

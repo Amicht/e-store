@@ -1,0 +1,19 @@
+
+<section class="input-group my-3">
+    <span class="input-group-text" >Choose category: </span>
+    <select class="form-select" #chosenCategory>
+      <option value="*">All Products</option>
+      <option *ngFor="let c of categories" value={{c.id}}>{{c.name}}</option>
+    </select>
+    <button class="btn btn-success" (click)="submitCategory(chosenCategory.value)">select</button>
+</section>
+
+<section class="row">
+  <div class="text-center mt-5" *ngIf="products.length === 0">No products available on this category</div>
+  <app-item *ngFor="let p of products"
+  [userRole]="userRole"
+  (onEditClickHandler)="onEditClickHandler($event)"
+  class="col-lg-3"
+  [product]="p"></app-item>
+</section>
+
