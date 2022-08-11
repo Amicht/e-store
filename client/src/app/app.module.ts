@@ -25,6 +25,8 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { AddProductComponent } from './pages/admin/add-product/add-product.component';
 import { UpdateProductComponent } from './pages/admin/update-product/update-product.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { MainComponent } from './pages/main/main.component';
+import { DeleteProductComponent } from './pages/admin/delete-product/delete-product.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { ErrorComponent } from './pages/error/error.component';
     AddProductComponent,
     UpdateProductComponent,
     ErrorComponent,
+    MainComponent,
+    DeleteProductComponent,
   ],
   imports: [
     BrowserModule,
