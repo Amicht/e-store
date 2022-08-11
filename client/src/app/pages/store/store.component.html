@@ -1,11 +1,13 @@
 <div class="row store-page">
 
-  <div class="col-4">
-    <app-my-cart [cart]="cart" (remove)="removeItemFromCart($event)"></app-my-cart>
-    <div class="mx-auto text-center mt-3">
-      <button class="btn btn-outline-success" routerLink="/order">
-        {{totalPrice | currency: "ILS"}} payment
-      </button>
+  <div class="col-4 ">
+    <div class="sticky-top">
+      <app-my-cart [cart]="cart" (remove)="removeItemFromCart($event)"></app-my-cart>
+      <div class="mx-auto text-center mt-3">
+        <button [disabled]="!cart ||cart.items.length === 0" class="btn btn-outline-success" routerLink="/order">
+          {{totalPrice | currency: "ILS"}} payment
+        </button>
+      </div>
     </div>
   </div>
 
