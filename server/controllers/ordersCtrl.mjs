@@ -2,10 +2,12 @@ import { addOrderAsync, getStoreOrdersCountAsync, getOrderAsync } from '../bl/or
 import {Router} from 'express';
 import ErrorModel from '../models/error.model.mjs';
 import { authUser } from '../middleware/auth-middleware.mjs';
+import { deleteCartAsync } from '../bl/cart.bl.mjs';
+
 
 const ordersCtrl = Router();
 
-ordersCtrl.get('/', authUser, async (req,res,next) => {
+ordersCtrl.get('/', async (req,res,next) => {
     try{
         await getStoreOrdersCountAsync()
         .then(orderCount => {
@@ -19,9 +21,12 @@ ordersCtrl.get('/', authUser, async (req,res,next) => {
 ordersCtrl.post('/', authUser, async (req,res,next) => {
     try{
         const newOrder = await addOrderAsync(req.body)
-        .then(res => getOrderAsync(res.insertId))
+        .then(async res => getOrderAsync(res.insertId))
         .catch(err => { throw new ErrorModel(400, err.message) });
-        res.status(201).send(newOrder);
+
+        await deleteCartAsync(newOrder[0].cart_id)
+        .catch(err => { throw new ErrorModel(400, err.message) });
+        res.status(201).send(newOrder[0]);
     }
     catch(err){ next(err) }
 });

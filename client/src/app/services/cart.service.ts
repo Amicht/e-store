@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {  Router } from '@angular/router';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
-import { Cart, CartItemReq } from '../models/cart.model';
+import { environment } from 'src/environments/environment';
+import { Cart, CartItemReq, CartItemResponse } from '../models/cart.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,21 +11,17 @@ import { Cart, CartItemReq } from '../models/cart.model';
 export class CartService {
 
   private $cartSubject = new BehaviorSubject<Cart | null>(null);
-  private cartURL = 'http://localhost:3001/api/cart/';
+  private cartURL = `${environment.serverURL}/api/cart/`;
   get cart$(){ return this.$cartSubject.asObservable(); }
   private currentcClientId = -1;
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient,
+    private  _router:Router) { }
 
   loadCart(){
     lastValueFrom(this.httpClient.get<Cart>(this.cartURL))
+    .then(cart => {return {...cart, items:this.addIntireImageURL(cart.items)}})
     .then(cart => this.$cartSubject.next(cart))
-    .catch(err => console.log(err.message));
-  }
-  startCart(clientId:number){
-    lastValueFrom(this.httpClient.post(this.cartURL, {id:clientId}))
-    .then(() => this.loadCart())
-    .then(()=> this.currentcClientId = clientId)
-    .catch(err => console.log(err.message));
+    .catch(() => this._router.navigate(['/']));
   }
   addProductToCart(productToAdd:CartItemReq){
     lastValueFrom(this.httpClient.post(this.cartURL+ 'item', productToAdd))
@@ -39,6 +37,12 @@ export class CartService {
     lastValueFrom(this.httpClient.delete(this.cartURL+ cartId))
     .then(()=> this.loadCart())
     .catch(err => console.log(err.message));
+  }
+  addIntireImageURL(productArray: CartItemResponse[]){
+    return productArray.map(p => {return {...p, image:environment.serverURL + p.image}});
+  }
+  getTotalCartPrice(cartItems:CartItemResponse[]){
+    return cartItems.reduce((a,b) => a + b.totalPrice,0)
   }
 
 }

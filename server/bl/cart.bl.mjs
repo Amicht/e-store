@@ -6,18 +6,24 @@ import {
 } from '../database/index.mjs';
 
 
-const getClientCartAsync = (clientId) => {
-    return getActiveCart(clientId).then(async cart => {
-        if(cart.length === 0) return null;
-        cart = cart[0];
-        cart.items = await getCartItems(cart.id);
-        return cart;
-    });
-}
 
 const startNewCartAsync = (clientId) => {
     const date = new Date();
     return addNewCart({clientId, date}).then(res => res.insertId);
+}
+
+const getClientCartAsync = (clientId) => {
+    return getActiveCart(clientId).then(async cart => {
+        if(cart.length === 0){
+            cart = await startNewCartAsync(clientId)
+            .then(res => getActiveCart(res));
+        }
+        else{
+            cart = cart[0];
+            cart.items = await getCartItems(cart.id);
+        }
+        return cart;
+    });
 }
 
 const addItemToCartAsync = ({product_id, amount, cart_id}) => {

@@ -1,9 +1,10 @@
 import { loginAsync, registerAsync, isValidIdAsync } from '../bl/auth.bl.mjs';
 import { Router } from 'express';
 import ErrorModel from '../models/error.model.mjs';
-
+import {authUser} from "../middleware/auth-middleware.mjs"
 const authCtrl = Router();
 
+// chack if ID is available
 authCtrl.get('/register/:newId', async(req,res,next) => {
     try{
         const id = req.params.newId;
@@ -14,7 +15,14 @@ authCtrl.get('/register/:newId', async(req,res,next) => {
     }
     catch(err){ next(err) }
 });
-
+// get user details
+authCtrl.get('/details', authUser, async(req,res)=>{
+    try{
+        const user = req.body.user;
+        res.send(user);
+    }
+    catch(err){ next(err) }
+})
 authCtrl.post('/login', async (req,res,next) => {
     try{
         if(!req.body) throw new ErrorModel(400, 'Baaaad request baby...');

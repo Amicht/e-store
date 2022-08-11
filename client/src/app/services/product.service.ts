@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Category } from '../models/category.model';
 import { ProductRes } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductService {
   private $productsubject = new BehaviorSubject<ProductRes[]>([]);
-  private productURL = 'http://localhost:3001/api/products'
+  private productURL = `${environment.serverURL}/api/products`
   get products$(){ return this.$productsubject.asObservable(); }
 
   constructor(private httpClient: HttpClient) { }
@@ -25,7 +27,6 @@ export class ProductService {
   async loadProductsByCategoryId(categoryId:number){
     const productRes = await lastValueFrom(this.httpClient.get<ProductRes[]>(this.productURL+ '/category/'+ categoryId));
     this.$productsubject.next(this.addIntireImageURL(productRes));
-    console.log(productRes);
   }
   async loadProductsBySearchword(searchword:string){
     lastValueFrom(this.httpClient.get<ProductRes[]>(this.productURL+ '/search/'+ searchword))
@@ -45,7 +46,6 @@ export class ProductService {
     console.log(productRes);
   }
   addIntireImageURL(productArray: ProductRes[]){
-    return productArray.map(p => {return {...p, image:`http://localhost:3001${p.image}`}});
+    return productArray.map(p => {return {...p, image:environment.serverURL + p.image}});
   }
-
 }

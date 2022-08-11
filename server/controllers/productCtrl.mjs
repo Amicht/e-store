@@ -9,7 +9,7 @@ import { authAdmin, authUser } from '../middleware/auth-middleware.mjs';
 const productCtrl = Router();
 
 
-productCtrl.get('/',authUser, async(req,res, next) => {
+productCtrl.get('/', async(req,res, next) => {
     try{
         const products = await getAllProductsAsync()
         .catch(() => { throw new ErrorModel(500, 'server errror') });

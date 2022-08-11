@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ClientRegister, ClientResponse } from '../models/client.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // private $productsubject = new BehaviorSubject<ClientResponse>([]);
-  private serverURL = 'http://localhost:3001/auth/'
-  // get products$(){ return this.$productsubject.asObservable(); }
 
+  private serverURL = `${environment.serverURL}/auth/`;
+  private $clientSubject:BehaviorSubject<ClientResponse | null> = new BehaviorSubject<ClientResponse | null>(null);
+  get client$(){
+    return this.$clientSubject.asObservable()
+  }
   constructor(private httpClient:HttpClient) { }
 
   async checkAvailableIdOnregistration(newId:number){
@@ -29,5 +32,9 @@ export class AuthService {
   setClientTokenToLocalStorage(token:string){
     window.localStorage.setItem("JWT", token);
   }
-  
+  async getClientDetails(){
+    return lastValueFrom(this.httpClient.get<ClientResponse>(this.serverURL + "details"))
+    .then(res => this.$clientSubject.next(res));
+  }
+
 }

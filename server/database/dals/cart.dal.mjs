@@ -2,12 +2,12 @@ import { queryAsync } from "../index.mjs";
 
 
 const getActiveCart = (clientID) => {
-    const query = "SELECT * FROM `carts` WHERE `client_id` = ? LIMIT 1";
+    const query = "SELECT a.* , b.firstName AS name FROM carts a JOIN clients b ON a.client_id = b.id WHERE `client_id` = ? LIMIT 1;";
     return queryAsync(query,[clientID]);
 };
 
 const getCartItems = (cartId) => {
-    const query = "SELECT a.* , b.name AS `name` FROM `cart_items` a JOIN `products` b ON a.product_id = b.id WHERE a.cart_id = ?";
+    const query = "SELECT a.* , b.name AS `name`, b.image AS image FROM `cart_items` a JOIN `products` b ON a.product_id = b.id WHERE a.cart_id = ?";
     return queryAsync(query, [cartId]);
 };
 

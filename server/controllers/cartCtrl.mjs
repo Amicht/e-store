@@ -29,7 +29,6 @@ cartCtrl.post('/',authUser, async(req,res, next)=>{
 cartCtrl.post('/item',authUser, async(req,res, next)=>{
     try{
         const itemToAdd = req.body;
-        console.log(itemToAdd);
         if(!itemToAdd) throw new ErrorModel(400, 'item not sent');
         await addItemToCartAsync(itemToAdd)
             .catch((err) => {throw new ErrorModel(400,'unable to add item to cart')});

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, lastValueFrom } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { OrderCountModel, OrderModelRequest, OrderModelResponce } from '../models/order.model';
 
 @Injectable({
@@ -8,15 +9,15 @@ import { OrderCountModel, OrderModelRequest, OrderModelResponce } from '../model
 })
 export class OrderService {
 
-  private serverURL = 'http://localhost:3001/api/orders'
+  private serverURL = `${environment.serverURL}/api/orders`;
   private $orderSubject = new BehaviorSubject<number>(0);
   get orderCount$(){ return this.$orderSubject.asObservable(); }
 
   constructor(private httpClient:HttpClient){ }
 
   async getOrdersCount(){
-    lastValueFrom(this.httpClient.get<OrderCountModel>(this.serverURL))
-    .then(ordersCount => this.$orderSubject.next(ordersCount.total));
+    lastValueFrom(this.httpClient.get<string>(this.serverURL))
+    .then(ordersCount => this.$orderSubject.next(+ordersCount));
   }
 
   async addnewOrder(order:OrderModelRequest){
