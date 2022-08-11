@@ -38,12 +38,17 @@ export class ProductService {
   async addProduct(product:FormData){
     const productRes = await lastValueFrom(this.httpClient.post(this.productURL, product))
       .then(()=> "new product added successfully!").catch(err => "Failed to add product. ERROR message: " + err.messgae);
-    console.log(productRes);
+    return productRes;
   }
   async updateProduct(product:ProductRes){
     const productRes = await lastValueFrom(this.httpClient.put(this.productURL, product))
       .then(()=> "Product updated successfully!").catch(err => "Failed to update product. ERROR message: " + err.messgae);
-    console.log(productRes);
+    return productRes;
+  }
+  async deleteProduct(id:number){
+    const productRes = await lastValueFrom(this.httpClient.delete(`${this.productURL}/${id}` ))
+      .then(()=> "Product deleted successfully!").catch(err => "Failed to update product. ERROR message: " + err.messgae);
+    return productRes;
   }
   addIntireImageURL(productArray: ProductRes[]){
     return productArray.map(p => {return {...p, image:environment.serverURL + p.image}});
