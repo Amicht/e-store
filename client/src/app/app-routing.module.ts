@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
 import { LoggedGuard } from './guards/logged.guard';
+import { AdminComponent } from './pages/admin/admin.component';
+import { ErrorComponent } from './pages/error/error.component';
+import { OrderSuccessComponent } from './pages/order-success/order-success.component';
+import { OrderComponent } from './pages/order/order.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { StoreComponent } from './pages/store/store.component';
 
 const routes: Routes = [
-  {path:'login', component:LoginComponent},
   {path:'register', component:RegisterComponent},
-  {path:'', component:HomeComponent, canActivate:[LoggedGuard]},
+  {path:'order', component:OrderComponent, canActivate:[LoggedGuard]},
+  {path:'success-order', component:OrderSuccessComponent, canActivate:[LoggedGuard]},
+  {path:'admin', component:AdminComponent, canActivate:[LoggedGuard]},
+  {path:'store', component:StoreComponent, canActivate:[LoggedGuard]},
+  {path:'', component:SignInComponent},
+  {path:'**', component:ErrorComponent},
 ];
 
 @NgModule({
