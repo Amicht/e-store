@@ -1,2 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+body{
+  background-color: rgb(233, 248, 243);
+  height: 100vh;
+}
+.invalid{
+  border: 2px solid red;
+}
