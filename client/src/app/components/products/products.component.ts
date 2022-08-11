@@ -21,8 +21,8 @@ export class ProductsComponent implements OnInit {
   submitCategory(category:string){
     this.categoryChange.emit(category)
   }
-  onEditClickHandler(p:ProductRes){
-    this.onEdidHandler.emit(p);
+  onEditClickHandler(event:{product:ProductRes, action:string}){
+    this.onEdidHandler.emit(event);
   }
 
 

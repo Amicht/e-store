@@ -1,5 +1,5 @@
 
-<div class="card border-0">
+<div class="card border-0 mt-2">
   <img src={{product.image}} class="card-img-top" alt={{product.image}}>
   <div class="card-body">
     <h5 class="card-title">{{product.name}}</h5>
@@ -12,9 +12,13 @@
       [productName]="product.name">
     </app-add-to-cart>
 
-    <button class="btn btn-outline-primary"
-      *ngIf="userRole === 2"
-      (click)="editBtnHandler(product)">Edit
-    </button>
+    <div *ngIf="userRole === 2" class="row">
+      <button class="btn btn-outline-primary border-0 col"
+        (click)="editBtnHandler(product, 'update')"><i class="bi bi-pen"></i>
+      </button>
+      <button class="btn btn-outline-danger border-0 col"
+        (click)="editBtnHandler(product, 'delete')"><i class="bi bi-trash"></i>
+      </button>
+    </div>
   </div>
 </div>

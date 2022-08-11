@@ -14,8 +14,8 @@ export class ItemComponent implements OnInit {
   @Input() product!:ProductRes;
   ngOnInit(): void {
   }
-  editBtnHandler(product:ProductRes){
-    this.onEditClickHandler.emit(product)
+  editBtnHandler(product:ProductRes, action:string){
+    this.onEditClickHandler.emit({product, action})
   }
 
 }
