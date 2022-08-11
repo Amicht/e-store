@@ -32,5 +32,6 @@ export {
     getAllProductsByNameSearch, 
     getProductsByCategory,
     addNewProduct, 
-    updateProduct
+    updateProduct,
+    deleteProduct
 } from './dals/product.dal.mjs'

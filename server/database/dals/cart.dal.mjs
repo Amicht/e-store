@@ -35,6 +35,10 @@ const deleteOneProductFromCart = (id) => {
     const query = "DELETE FROM `cart_items` WHERE id = ?";
     return queryAsync(query, [id])
 }
+const deleteItemByProductId = (productId) => {
+    const query = "DELETE FROM `cart_items` WHERE product_id = ?";
+    return queryAsync(query, [productId])
+}
 
 const deleteAllProductFromCart = (cartId) => {
     const query = "DELETE FROM `cart_items` WHERE cart_id = ?";
@@ -57,4 +61,5 @@ export {
     deleteOneProductFromCart,
     deleteAllProductFromCart,
     deleteCart,
+    deleteItemByProductId,
 }

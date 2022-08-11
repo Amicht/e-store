@@ -4,6 +4,7 @@ import {
     addNewCart, addProductToCart, deleteCart, deleteAllProductFromCart, 
     deleteOneProductFromCart, getCartItem, getOneProductById, 
 } from '../database/index.mjs';
+import { deleteItemByProductId } from '../database/dals/cart.dal.mjs';
 
 
 
@@ -41,6 +42,8 @@ const addItemToCartAsync = ({product_id, amount, cart_id}) => {
 
 const removeItemFromCartAsync = (itemId) => deleteOneProductFromCart(itemId);
 
+const removeItemByProductIdAsync = (productId) => deleteItemByProductId(productId);
+
 const deleteCartAsync = (cartId) => {
     return deleteAllProductFromCart(cartId).then(() => deleteCart(cartId));
 }
@@ -51,4 +54,5 @@ export {
     addItemToCartAsync,
     removeItemFromCartAsync,
     deleteCartAsync,
+    removeItemByProductIdAsync
 }

@@ -1,5 +1,6 @@
-import { addProductAsync, getAllProductsAsync, getFoodCategoriesAsync, getProdctsByNameSearchAsync,
+import { addProductAsync, deleteProductAsync, getAllProductsAsync, getFoodCategoriesAsync, getProdctsByNameSearchAsync,
     getProductsByCategoryAsync, updateProductAsync} from '../bl/products.bl.mjs';
+import { removeItemByProductIdAsync } from '../bl/cart.bl.mjs'
 import { Router } from 'express';
 import ErrorModel from '../models/error.model.mjs';
 import { addFileHelper } from '../helpers/fileUploadHelper.mjs';
@@ -73,6 +74,21 @@ productCtrl.put('/',authAdmin, async(req,res, next) => {
     }
     catch(err){ next(err) }
 });
+
+productCtrl.delete('/:id',authAdmin, async(req,res, next) => {
+    try{
+        const id = +req.params.id;
+        if(!id) throw new ErrorModel(404, 'no product to delete');
+        await removeItemByProductIdAsync(id)
+        .then(() => deleteProductAsync(id))
+        .catch(() => {
+            throw new ErrorModel(500, 'server errror');
+        });
+        res.status(204).send();
+    }
+    catch(err){ next(err) }
+});
+
 
 
 export { productCtrl };

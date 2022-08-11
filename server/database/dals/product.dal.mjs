@@ -36,14 +36,11 @@ const updateProduct = ({id, name, category_id, price}) => {
     return queryAsync(query, [name, category_id, price, id]);
 }
 
-const foods = [
-    {
-        name: 'M&M',
-        category_id: 7,
-        price: 15,
-        image: './upload/1a6a4e10-a2dc-4c5d-9f24-b33b94aa9404.jpg'
-    }
-];
+const deleteProduct = (id) => {
+    const query = "DELETE FROM products WHERE `id` = ?";
+    return queryAsync(query, [id]);
+}
+
 
 export {
     getAllProducts,
@@ -52,5 +49,6 @@ export {
     getAllProductsByNameSearch,
     getProductsByCategory,
     addNewProduct,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
