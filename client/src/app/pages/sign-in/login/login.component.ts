@@ -22,10 +22,7 @@ export class LoginComponent implements OnInit {
     private _router:Router) { }
 
   ngOnInit(): void {
-    this.loginForm = this.formBuilder.group({
-      id: [null, [Validators.required, Validators.minLength(8) ]],
-      password: ["", [Validators.minLength(4) , Validators.required]],
-    })
+    this.setNewForm()
   }
   login(){
     this.authService.login(
@@ -34,8 +31,15 @@ export class LoginComponent implements OnInit {
     .then(() => {
       this.authService.getClientDetails();
       this.cartService.loadCart();
+      this.setNewForm();
     })
     .catch(err => console.log(err.message))
+  }
+  setNewForm(){
+    this.loginForm = this.formBuilder.group({
+      id: [null, [Validators.required, Validators.minLength(8) ]],
+      password: ["", [Validators.minLength(4) , Validators.required]],
+    })
   }
 
 }

@@ -13,7 +13,6 @@ export class CartService {
   private $cartSubject = new BehaviorSubject<Cart | null>(null);
   private cartURL = `${environment.serverURL}/api/cart/`;
   get cart$(){ return this.$cartSubject.asObservable(); }
-  private currentcClientId = -1;
   constructor(private httpClient:HttpClient,
     private  _router:Router) { }
 
@@ -35,7 +34,7 @@ export class CartService {
   }
   deleteCart(cartId:number){
     lastValueFrom(this.httpClient.delete(this.cartURL+ cartId))
-    .then(()=> this.loadCart())
+    .then(()=> this.$cartSubject.next(null))
     .catch(err => console.log(err.message));
   }
   addIntireImageURL(productArray: CartItemResponse[]){
@@ -44,5 +43,4 @@ export class CartService {
   getTotalCartPrice(cartItems:CartItemResponse[]){
     return cartItems.reduce((a,b) => a + b.totalPrice,0)
   }
-
 }

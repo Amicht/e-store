@@ -1,6 +1,6 @@
 <div class="row store-page">
 
-  <div class="col-4 ">
+  <div class="col-5">
     <div class="sticky-top">
       <app-my-cart [cart]="cart" (remove)="removeItemFromCart($event)"></app-my-cart>
       <div class="mx-auto text-center mt-3">
@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <app-products class="col-8"
+  <app-products class="col-7"
     [userRole]="1"
     [categories]="categories"
     [products]="products"

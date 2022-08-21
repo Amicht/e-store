@@ -36,5 +36,9 @@ export class AuthService {
     return lastValueFrom(this.httpClient.get<ClientResponse>(this.serverURL + "details"))
     .then(res => this.$clientSubject.next(res));
   }
+  clearStorage(){
+    this.$clientSubject.next(null);
+    window.localStorage.removeItem("JWT");
+  }
 
 }

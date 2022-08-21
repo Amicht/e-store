@@ -46,6 +46,7 @@ export class StoreComponent implements OnInit {
     else{
       this.productService.loadProductsByCategoryId(+category);
     }
+    window.scrollTo(0,0)
   }
   removeItemFromCart(itemId:number){
     this.cartServise.removeProductFromCart(itemId);

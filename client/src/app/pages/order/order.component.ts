@@ -24,7 +24,6 @@ export class OrderComponent implements OnInit {
         }
       });
     this.cartService.loadCart();
-
   }
   sendOrder(order: {city:string, street:string,arrival:string, creditNumber:number}){
     if(this.cart){
@@ -35,7 +34,8 @@ export class OrderComponent implements OnInit {
         ...order
       }
       this.orderService.addnewOrder(myOrder)
-      .then(order => this._router.navigate(['/success-order']))
+      .then(() => this.cartService.deleteCart(this.cart!.id))
+      .then(() => this._router.navigate(['/success-order']))
       .catch(() => console.log("Failed to order"))
     }
   }
