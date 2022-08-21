@@ -22,7 +22,7 @@ export class AuthService {
 
   async register(client:ClientRegister){
     return lastValueFrom(this.httpClient.post(this.serverURL + 'register',client))
-    .then(() => console.log("Client successfully added"))
+    .then(() => this.clearStorage())
   }
   async login(password:string, id:number){
     return firstValueFrom(this.httpClient.post(this.serverURL + 'login',{password,id},{responseType:'text'}))
@@ -40,5 +40,4 @@ export class AuthService {
     this.$clientSubject.next(null);
     window.localStorage.removeItem("JWT");
   }
-
 }

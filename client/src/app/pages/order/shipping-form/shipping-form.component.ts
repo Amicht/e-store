@@ -41,7 +41,6 @@ export class ShippingFormComponent implements OnInit {
     if(this.shippingForm.invalid){
       return;
     }
-    console.log(this.shippingForm.value);
     this.sendShipping.emit(this.shippingForm.value)
   }
 

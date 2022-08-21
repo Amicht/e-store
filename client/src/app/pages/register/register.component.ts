@@ -64,7 +64,6 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = "";
       delete this.firstRegisterForm.value["confirm"];
       this.registrationToEdit = {...this.registrationToEdit, ...this.firstRegisterForm.value}
-      console.log(this.firstRegisterForm.value["password"]);
       this.formNumber = 2;
     }
   }
@@ -72,7 +71,6 @@ export class RegisterComponent implements OnInit {
   async submitSecondForm(){
     if(this.secondRegisterForm.valid){
       this.registrationToEdit = {...this.registrationToEdit, ...this.secondRegisterForm.value}
-      console.log(this.registrationToEdit);
       await this.authService.register(this.registrationToEdit)
         .then(() => this._router.navigate(["/"]))
     }
