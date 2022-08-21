@@ -1,8 +1,9 @@
-### Missions Left
+## Almost Cheap - E-Com Supermarket Project
 
-- On login - auto-route admin to store
-- Split "GET" and "POST" on cart request.
-- Success order page - add download order file function (fs.writeFile?) .
-- Order page - add search input for products in cart with marker.
-- Order page - auto-complete input fields on double click.
-- Order page - credit card regex validation.
+### Description
+
+A simple online supermarket project, using MEAN (mysql).
+
+The project implements of CRUD operations, 
+auth management, multi system-entities, client-server-db, end to end app.
+
