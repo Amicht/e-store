@@ -12,7 +12,7 @@ auth management, multi system-entities, client-server-db, end to end app.
 ## API Documentation
 
 To view the complete documentation of all system entities - 
-[click here](/api-docs/index.html)
+[click here](/api-docs/api-doc.pdf)
 
 
 ## Dependencies / Tools
