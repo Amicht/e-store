@@ -41,7 +41,7 @@ export class StoreComponent implements OnInit {
   }
   setCategory(category:string){
     if(category === "*"){
-      this.productService.loadProducts()
+      this.productService.loadProducts();
     }
     else{
       this.productService.loadProductsByCategoryId(+category);
@@ -51,4 +51,5 @@ export class StoreComponent implements OnInit {
   removeItemFromCart(itemId:number){
     this.cartServise.removeProductFromCart(itemId);
   }
+
 }

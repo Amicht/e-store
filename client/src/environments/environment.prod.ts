@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverURL: ""
+  serverURL: "https://almost-cheap.herokuapp.com"
 };

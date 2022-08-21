@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       this.authService.getClientDetails();
       this.cartService.loadCart();
       this.setNewForm();
+      window.scrollTo(0,0);
     })
     .catch(err => console.log(err.message))
   }

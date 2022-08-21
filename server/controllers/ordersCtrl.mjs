@@ -21,11 +21,11 @@ ordersCtrl.get('/', async (req,res,next) => {
 ordersCtrl.post('/', authUser, async (req,res,next) => {
     try{
         const newOrder = await addOrderAsync(req.body)
-        .then(async res => getOrderAsync(res.insertId))
-        .catch(err => { throw new ErrorModel(400, err.message) });
-
-        await deleteCartAsync(newOrder[0].cart_id)
-        .catch(err => { throw new ErrorModel(400, err.message) });
+        .then(async res => getOrderAsync(res.insertId)).catch(() => null);
+        if(!newOrder) throw new ErrorModel(400, "failed to order");
+        const isDelete = await deleteCartAsync(newOrder[0].cart_id)
+        .catch(() => null);
+        // if(!isDelete)  throw new ErrorModel(400, "failed to delete cart");
         res.status(201).send(newOrder[0]);
     }
     catch(err){ next(err) }

@@ -9,16 +9,20 @@ authCtrl.get('/register/:newId', async(req,res,next) => {
     try{
         const id = req.params.newId;
         const isValid = await isValidIdAsync(id).catch(() => {
-                throw new ErrorModel(500, 'Server error on register chack')
-            })
+                throw new ErrorModel(500, 'Server error on register chack');
+            });
         res.send(isValid);
     }
     catch(err){ next(err) }
 });
+
 // get user details
 authCtrl.get('/details', authUser, async(req,res)=>{
     try{
         const user = req.body.user;
+        if(!user){
+            throw new ErrorModel(401, "unauthorized");
+        }
         res.send(user);
     }
     catch(err){ next(err) }

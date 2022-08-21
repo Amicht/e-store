@@ -30,6 +30,9 @@ export class NgbdModalContent {
     private cartService:CartService) {}
 
   close(amount:number){
+    if(amount<1){
+      return;
+    }
     this.addToCart(amount)
     this.activeModal.close('Close click')
   }

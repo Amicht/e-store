@@ -9,7 +9,8 @@ const cartCtrl = Router();
 cartCtrl.get('/', authUser,async(req,res, next)=>{
     try{
         const clientId = +req.body.user.id;
-        const cart = await getClientCartAsync(clientId);
+        const cart = await getClientCartAsync(clientId).catch(() => null);
+        if(!cart) throw new ErrorModel(500, "failed to load cart");
         res.send(cart);
     }
     catch(err){ next(err) }
@@ -17,10 +18,11 @@ cartCtrl.get('/', authUser,async(req,res, next)=>{
 
 cartCtrl.post('/',authUser, async(req,res, next)=>{
     try{
-        const clientId = req.body.id;
+        const clientId = +req.body.user.id;
         if(!clientId) throw new ErrorModel(400, 'cart not sent');
         const newCartId = await startNewCartAsync(clientId)
-            .catch(() => {throw new ErrorModel(400,'unable to create new cart')});
+            .catch(() => null);
+        if(!newCartId) throw new ErrorModel(400,'unable to create new cart');
         res.status(201).send(newCartId);
     }
     catch(err){ next(err) }
@@ -30,8 +32,8 @@ cartCtrl.post('/item',authUser, async(req,res, next)=>{
     try{
         const itemToAdd = req.body;
         if(!itemToAdd) throw new ErrorModel(400, 'item not sent');
-        await addItemToCartAsync(itemToAdd)
-            .catch((err) => {throw new ErrorModel(400,'unable to add item to cart')});
+        const item = await addItemToCartAsync(itemToAdd).catch(() => null);
+        if(!item) throw new ErrorModel(400,'unable to add item to cart');
         res.status(201).send(itemToAdd);
     }
     catch(err){ next(err) }
@@ -40,7 +42,8 @@ cartCtrl.post('/item',authUser, async(req,res, next)=>{
 cartCtrl.delete('/item/:itemId',authUser, async(req,res, next)=>{
     try{
         const itemId = +req.params.itemId;
-        await removeItemFromCartAsync(itemId);
+        const item = await removeItemFromCartAsync(itemId).catch(()=> null);
+        if(!item) throw new ErrorModel(500,'Failed to remove item from cart');
         res.status(204).send();
     }
     catch(err){ next(err) }
@@ -49,7 +52,9 @@ cartCtrl.delete('/item/:itemId',authUser, async(req,res, next)=>{
 cartCtrl.delete('/:cartId',authUser, async(req,res, next)=>{
     try{
         const cartId = +req.params.cartId;
-        await deleteCartAsync(cartId);
+        if(!cartId) throw new ErrorModel(400, "bad request");
+        const deletetd = await deleteCartAsync(cartId);
+        if(!deletetd) throw new ErrorModel(500,'Failed to delete cart')
         res.status(204).send();
     }
     catch(err){ next(err) }

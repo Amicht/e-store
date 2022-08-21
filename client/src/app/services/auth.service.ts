@@ -34,7 +34,8 @@ export class AuthService {
   }
   async getClientDetails(){
     return lastValueFrom(this.httpClient.get<ClientResponse>(this.serverURL + "details"))
-    .then(res => this.$clientSubject.next(res));
+    .then(res => this.$clientSubject.next(res)).catch(() => console.error("unauthorized...")
+    );
   }
   clearStorage(){
     this.$clientSubject.next(null);
