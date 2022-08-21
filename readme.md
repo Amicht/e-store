@@ -1,6 +1,6 @@
 # "Almost Cheap" - E-Com Supermarket Project
 
-[Live app](https://almost-cheap.herokuapp.com/)
+## [Live app](https://almost-cheap.herokuapp.com/)
 
 ## Description
 
