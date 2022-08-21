@@ -9,10 +9,22 @@ A simple online supermarket project, using MEAN (mysql).
 The project implements of CRUD operations, 
 auth management, multi system-entities, client-server-db, end to end app.
 
+
+
 ## API Documentation
 
-To view the complete documentation of all system entities - 
-[click here](/api-docs/api-doc.pdf)
+- Endpoint - https://almost-cheap.herokuapp.com 
+
+### Products:
+![](/api-docs/products.jpg)
+### Auth:
+![](/api-docs/auth.jpg)
+### Cart:
+![](/api-docs/cart.jpg)
+### Orders:
+![](/api-docs/orders.jpg)
+
+
 
 
 ## Dependencies / Tools
