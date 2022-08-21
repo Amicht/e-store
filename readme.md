@@ -1,9 +1,31 @@
-## Almost Cheap - E-Com Supermarket Project
+# "Almost Cheap" - E-Com Supermarket Project
 
-### Description
+[Live app](https://almost-cheap.herokuapp.com/)
+
+## Description
 
 A simple online supermarket project, using MEAN (mysql).
 
 The project implements of CRUD operations, 
 auth management, multi system-entities, client-server-db, end to end app.
 
+## API Documentation
+
+To view the complete documentation of all system entities - 
+[click here](/api-docs/index.html)
+
+
+## Dependencies / Tools
+
+-  Client:
+    - Angular
+    - Bootstrap
+- Server:
+    - Node.js
+    - Express.js
+    - express-fileupload
+    - uuid
+    - dotenv
+    - jsonwebtoken
+- Database:
+    - Mysql
