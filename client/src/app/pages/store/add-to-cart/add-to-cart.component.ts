@@ -7,12 +7,14 @@ import { CartService } from 'src/app/services/cart.service';
   selector:'ngbd-modal-content',
   template:`
   <div class="modal-header">
-    <h4 class="modal-title">Add {{name}} to cart</h4>
+    <h4 class="modal-title">Add "{{name}}" to cart</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
   </div>
-  <div class="modal-body">
-    <label>Amount: </label>
-    <input type="number" min="1" [defaultValue]="1" required #amountOf/>
+  <div class="modal-body ">
+    <div class="input-group">
+      <span class="input-group-text" id="addon-wrapping">Amount: </span>
+      <input class="form-control" type="number" min="1" [defaultValue]="1" required #amountOf/>
+    </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-success"

@@ -1,10 +1,20 @@
 <div class="row py-3">
-  <app-general-details class="col-sm-4 my-3"
+
+  <app-login *ngIf="!clientDetails"
+    class="col-sm-4 my-3">
+  </app-login>
+
+  <app-welcome *ngIf="clientDetails"
+    class="col-sm-4 my-3"
     [cart]="cart"
-    [clientDetails]="clientDetails"
+    [clientDetails]="clientDetails">
+  </app-welcome>
+
+  <app-about class="col-sm-4 my-3"></app-about>
+
+  <app-general-details
+    class="col-sm-4 my-3"
     [orderCount]="orderCount"
     [productsCount]="productsCount">
   </app-general-details>
-  <app-about class="col-sm-4 my-3"></app-about>
-  <app-login class="col-sm-4 my-3"></app-login>
 </div>

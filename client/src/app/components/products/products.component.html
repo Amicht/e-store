@@ -1,11 +1,10 @@
 
-<section class="input-group  sticky-top py-2">
-    <span class="input-group-text" >Choose category: </span>
-    <select class="form-select" #chosenCategory>
+<section class="input-group sticky-top py-2 col-2">
+    <span class="input-group-text" >Category: </span>
+    <select class="form-select" #chosenCategory (change)="submitCategory(chosenCategory.value)">
       <option value="*">All Products</option>
       <option *ngFor="let c of categories" value={{c.id}}>{{c.name}}</option>
     </select>
-    <button class="btn btn-success" (click)="submitCategory(chosenCategory.value)">select</button>
 </section>
 
 <section class="row">

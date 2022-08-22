@@ -1,6 +1,11 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">Almost Cheap</a>
-    <span role="button" class="d-flex" (click)="logOut()">Log-out</span>
+    <a class="navbar-brand"  routerLink="/">
+      <img src="/assets/uploads/logo.png" alt="" width="60" height="60">
+    </a>
+    <div class="d-flex">
+      <span *ngIf="isClient" class="text-muted fs-2 block-text" >|</span>
+      <span *ngIf="isClient" role="button" class="my-auto mx-3 logout" (click)="logOut()">Log-out</span>
+    </div>
   </div>
 </nav>

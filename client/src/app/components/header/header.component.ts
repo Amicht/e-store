@@ -9,12 +9,22 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
+  isClient: boolean = false;
+
   constructor(private authService:AuthService,
     private _router:Router) { }
 
   ngOnInit(): void {
+    this.authService.client$.subscribe(res => {
+      if(res){
+        this.isClient = true;
+      }
+      else{
+        this.isClient = false;
+      }
+    })
   }
-  
+
   logOut(){
     this.authService.clearStorage();
     this._router.navigate(['/']);

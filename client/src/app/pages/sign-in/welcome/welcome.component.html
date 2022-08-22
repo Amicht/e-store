@@ -1,0 +1,17 @@
+<div *ngIf="clientDetails" class="card border-0 mt-3 bg-transparent text-success fw-bold" >
+
+  <img src="./assets/uploads/smiley.jpg"  class="card-img-top" alt="...">
+  <div class="card-body">
+    <h3 class="card-title">Welcome {{clientDetails.firstName}}!</h3>
+    <div *ngIf="cart && cart.items.length > 0">
+      you have open cart from {{cart.date | date}}<br/>
+      <button routerLink="/store"
+      class="btn btn-outline-primary mt-2 mx-auto">continue shopping</button>
+    </div>
+    <div *ngIf="!cart || cart.items.length === 0 ">
+      <button routerLink="/store"
+      class="btn btn-outline-primary my-3 mx-auto">start shopping</button>
+    </div>
+  </div>
+
+</div>

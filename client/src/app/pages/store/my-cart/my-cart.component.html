@@ -1,30 +1,49 @@
-<div class="mt-2">
-  <h2>My Cart</h2>
-  <div *ngIf="cart" >
-
-    <div *ngIf="cart.items.length === 0" class="mt-5 text-center">Your cart is empty...</div>
-
-    <div class="card" *ngIf="cart.items.length > 0">
-      <ul class="list-group list-group-flush scroller">
-        <li class="list-group-item" *ngFor="let item of cart.items">
-
-          <button type="button"
-            class="btn-close"
-            aria-label="Close" (click)="removeItemFromCart(item.id)">
-          </button>
-
-          <span class="mx-3">
-            {{item.amount}}
-            {{item.name}} -
-            <span class="fw-bold text-success">
-              {{item.totalPrice | currency: "ILS"}}
-            </span>
-          </span>
-
-        </li>
-      </ul>
-    </div>
-
+<ng-template #content let-offcanvas>
+  <div class="offcanvas-header">
+    <h4 class="offcanvas-title" id="offcanvas-basic-title">My Cart</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
   </div>
-</div>
 
+  <div class="offcanvas-body">
+      <div *ngIf="cart" >
+
+        <div *ngIf="cart.items.length === 0" class="mt-5 text-center">Your cart is empty...</div>
+
+        <div class="card" *ngIf="cart.items.length > 0">
+          <ul class="list-group list-group-flush scroller">
+            <li class="list-group-item" *ngFor="let item of cart.items">
+
+              <button type="button"
+                class="btn-close"
+                aria-label="Close" (click)="removeItemFromCart(item.id)">
+              </button>
+
+              <span class="mx-3">
+                {{item.amount}}
+                {{item.name}} -
+                <span class="fw-bold text-success">
+                  {{item.totalPrice | currency: "ILS"}}
+                </span>
+              </span>
+
+            </li>
+          </ul>
+        </div>
+
+        <div class="mx-auto text-center mt-4">
+          <button [disabled]="!cart ||cart.items.length === 0"
+          (click)="offcanvas.dismiss('Cross click')"
+          class="btn btn-outline-success" routerLink="/order">
+            {{totalPrice | currency: "ILS"}} payment
+          </button>
+        </div>
+
+      </div>
+    </div>
+</ng-template>
+
+<div class="sticky-top col">
+  <button role="button" class="cart-btn mt-5 btn btn-outline-primary" (click)="open(content)">
+    <i class="bi bi-cart4"></i>
+  </button>
+</div>

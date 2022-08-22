@@ -1,23 +1,19 @@
-<div class="row store-page">
+<div class="row store-page container">
 
-  <div class="col-5">
-    <div class="sticky-top">
-      <app-my-cart [cart]="cart" (remove)="removeItemFromCart($event)"></app-my-cart>
-
-      <div class="mx-auto text-center mt-3">
-        <button [disabled]="!cart ||cart.items.length === 0" class="btn btn-outline-success" routerLink="/order">
-          {{totalPrice | currency: "ILS"}} payment
-        </button>
-      </div>
-      
-    </div>
+  <div class="my-cart col-1">
+    <app-my-cart [cart]="cart"
+      [totalPrice]="totalPrice"
+      (remove)="removeItemFromCart($event)">
+    </app-my-cart>
   </div>
 
-  <app-products class="col-7"
+  <app-products class="col"
     [userRole]="1"
     [categories]="categories"
     [products]="products"
     (categoryChange)="setCategory($event)">
   </app-products>
 
+  <div class="col-1"></div>
+  
 </div>
