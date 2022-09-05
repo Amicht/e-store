@@ -4,7 +4,7 @@
 
 ## Description
 
-A simple online supermarket project, using MEAN (mysql).
+A simple online supermarket project, using MEAN, frontend in Angular, Node + Express for the backend, mysql for the database.
 
 The project implements of CRUD operations, 
 auth management, multi system-entities, client-server-db, end to end app.
